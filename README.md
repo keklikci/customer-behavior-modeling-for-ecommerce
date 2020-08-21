@@ -101,12 +101,15 @@ SPARK_WORKER_CORES=3
 cd $SPARK_HOME
 sbin/start-master.sh
 ```
-2. In your $SPARK_HOME, ```logs``` directory is created with the master's log. Examine that log. If everything is fine, then it should say "ALIVE" for the master. If not, please go over the previous steps one by one. You can now navigate to the master web UI on (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8080/)
-```ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com``` is the public DNS of the master.
-3. In your $SPARK_HOME, start your slave by running the following command. The <master-url> is (spark://master:7077) and is displayed on the master web UI.
+2. In your $SPARK_HOME, ```logs``` directory is created with the master's log. Examine that log. If everything is fine, then it should say "ALIVE" for the master. If not, please go over the previous steps one by one. You can now navigate to the master web UI on (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8080) ```ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com``` is the public DNS of the master.
+3. In your $SPARK_HOME, start your slave by running the following command. The master-url is spark://master:7077 and is displayed on the master web UI.
 ```bash
-sbin/start-slave.sh <master-url>
+sbin/start-slave.sh spark://master:7077
 ```
+4. If successfully started, you can access the worker web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8081).If not, please refer to **step 2**.
+---
+### Submitting Jobs to Cluster 
+
 ---
 
 ### TODO
@@ -115,6 +118,6 @@ sbin/start-slave.sh <master-url>
 5. History Server
 6. Logs (spark-events) and Logs (master, worker, history server)
 7. Only private or public IP's (private preferred)
-8. start / stop master , slave , hsitroy server 
+8. start / stop master , slave , history server 
 
 
