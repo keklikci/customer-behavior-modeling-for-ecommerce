@@ -47,7 +47,7 @@ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ---
 ### Environment Variables (run the commands in order)
 
-1. Run the following command to define $SPARK_HOME. This is the directory you will your master and slaves.
+1. Run the following command to define $SPARK_HOME. This is the directory you will start your master and slaves.
 ```bash
 export SPARK_HOME=/home/ubuntu/spark-3.0.0-bin-hadoop2.7
 ```
@@ -69,16 +69,16 @@ sudo nano -w /etc/hosts
 2. Add the private IP address of the spark master to the file.
 ```bash
 127.0.0.1 localhost
-XXX.XX.X.61 master
+XXX.XX.X.XX master
 ```
 ---
 
 # TODO
-> Cluster Set-Up
-> Configuring Cluster
-> Monitoring Cluster
-> URLS
-> History Server
-> Logs (spark-events) and Logs (master, worker, history server)
+1. Cluster Set-Up
+2. Configuring Cluster
+3. Monitoring Cluster
+4. URLS
+5. History Server
+6. Logs (spark-events) and Logs (master, worker, history server)
 
 
