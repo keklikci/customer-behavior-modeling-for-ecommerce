@@ -14,12 +14,16 @@ From EC2 Management Console, go to ```Security Groups > Edit Inbound Rules > Add
 
 *spark-shell-jobs*
 ```Custom TCP - TCP - 4040 - Custom - 0.0.0.0/0 ```
+
 *spark-master-ui-port*
 ```Custom TCP - TCP - 8080 - Custom - 0.0.0.0/0 ```
+
 *spark-history-server*
-``Custom TCP - TCP - 18080 - Custom - 0.0.0.0/0 ```
+```Custom TCP - TCP - 18080 - Custom - 0.0.0.0/0 ```
+
 *spark-master-port*
 ```Custom TCP - TCP - 7077 - Custom - 0.0.0.0/0 ```
+
 *spark-worker-ui-port*
 ```Custom TCP - TCP - 8081 - Custom - 0.0.0.0/0 ```
 
