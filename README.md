@@ -9,7 +9,12 @@ Spark Standalone Cluster ec-2
 
 ### Keyless SSH Set-Up
 
-```cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys```
+1. Go to ssh directory.
+```bash
+cd ~/.ssh
+```
+2.
+
 
 ---
 
