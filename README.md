@@ -61,11 +61,55 @@ XXX.XX.X.XX master
 ---
 ### Configuring Cluster
 
-1. 
+1. Go to your spark conf directory by running the following command.
+```bash
+cd $SPARK_HOME/conf
+```
+2. Here you have to create your own configuration files by using the following templates; slaves.template, spark-defaults.conf.template, spark-env.sh.template, log4j.properties.template. Copy the contents of the templates to separate files by only removing .template from the filenames as follows:
+```bash
+cp slaves.template slaves 
+cp spark-defaults.conf.template spark-defaults.conf
+cp spark-env.sh.template spark-env.sh
+cp log4j.properties.template log4j.properties
+```
+3. Now, you have your configuration files but all spark parameters inside are commented out. Please leave ```log4j.properties``` as it is since it's the only file that is not commented out. The remaining files, however, must be edited.
+4. Go to your slaves file and add the private IP of your slave like the following:
+```bash
+# A Spark Worker will be started on each of the machines listed below.
+XXX.XX.XX.46
+```
+5. Go to your ```spark-defaults.conf``` file and set the following:
+```bash
+spark.eventLog.enabled          true
+spark.driver.memory             12g
+spark.serializer                org.apache.spark.serializer.KryoSerializer
+spark.master                    spark://master:7077
+spark.eventLog.dir              file:///tmp/spark-events
+spark.history.fs.logDirectory   file:///tmp/spark-events
+```
+6. Go to your ```spark-env.sh``` file and set the following:
+```bash
+SPARK_MASTER_HOST=XXX.XX.XX.61
+JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+PYSPARK_PYTHON=python3
+SPARK_WORKER_CORES=3
+```
+---
+### Start master and slave 
+1. Start your master by running the following commands.
+```bash
+cd $SPARK_HOME
+sbin/start-master.sh
+```
+2. In your $SPARK_HOME, ```logs``` directory is created with the master's log. Examine that log. If everything is fine, then it should say "ALIVE" for the master. If not, please go over the previous steps one by one. You can now navigate to the master web UI on (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8080/)
+```ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com``` is the public DNS of the master.
+3. In your $SPARK_HOME, start your slave by running the following command. The <master-url> is (spark://master:7077) and is displayed on the master web UI.
+```bash
+sbin/start-slave.sh <master-url>
+```
+---
 
 ### TODO
-1. Cluster Set-Up
-2. Configuring Cluster
 3. Monitoring Cluster
 4. URLS (http://ec2-18-191-223-14.us-east-2.compute.amazonaws.com:4040/)
 5. History Server
