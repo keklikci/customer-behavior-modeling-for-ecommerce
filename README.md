@@ -4,7 +4,9 @@ Requirements for following this
 This README.md is for running ```feature_extraction_spark_pipeline.py``` on AWS ec-2 instances. Sections include;
 
 > ```Cluster Set-Up```
+
 > ```Keyless SSH Set-Up```
+
 > ```Environment Variables```
 > ```Configuring Cluster```
 > ```Monitoring Cluster```
