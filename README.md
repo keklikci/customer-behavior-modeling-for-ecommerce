@@ -74,7 +74,7 @@ cp spark-env.sh.template spark-env.sh
 cp log4j.properties.template log4j.properties
 ```
 3. Now, you have your configuration files but all spark parameters inside are commented out. Please leave ```log4j.properties``` as it is since it's the only file that is not commented out. The remaining files, however, must be edited.
-4. Go to your slaves file and add the private IP of your slave like the following:
+4. Go to your ```slaves``` file and add the private IP of your slave like the following:
 ```bash
 # A Spark Worker will be started on each of the machines listed below.
 XXX.XX.XX.46
