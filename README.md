@@ -118,11 +118,24 @@ sbin/start-history-server.sh
 ```bash
 bin/spark-submit --master spark://master:7077 /path/to/your/script node-count /path/to/inputfile
 ```
-3. If successfully launched, go to the jobs web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040). This web UI is accessible until the termination of your code, i.e sc.stop() is invoked. However, after termination you could view info related to executors, storage, environment, etc at your history-server url (explained in the following section)
+3. If successfully launched, go to the jobs web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040). This web UI is accessible until the termination of your code, i.e sc.stop() is invoked. However, after termination you could view info related to executors, storage, environment, etc at your history-server url (explained in the following section).
 ---
 ### Monitoring Cluster
-1. After the termination of spark context, (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040) is no longer accessible. However, you can access all spark job logs at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:18080). This is how you will be monitoring your application even after the termination of your code.
-
+1. After the termination of spark context, (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040) is no longer accessible. However, you can access all spark job logs at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:18080). This is how you will be monitoring your application after the termination of your code.
+2. History server fetches spark logs from ```/tmp/spark-events``` directory. You could clear the history server web UI if you submit too many applications by clearing those logs with ```rm -r /tmp/spark-events```.
+---
+### Stop master, slave, history server
+1. Run the following commands to stop the master and slave.
+```bash
+sbin/stop-master.sh
+sbin/stop-slave.sh
+```
+2. After running each command, remember that you will lose access to the web UI of the instance you stop.
+3. If you no longer desire to look at the history-server, stop the history server by running the following command.
+```bash
+sbin/stop-history-server.sh
+```
+4. After stopping all instances, it's convenient to delete the ```$SPARK_HOME/logs```directory. When you re-launch an application, it will automatically be re-generated.
 ---
 ### TODO
 3. Monitoring Cluster
@@ -130,7 +143,7 @@ bin/spark-submit --master spark://master:7077 /path/to/your/script node-count /p
 5. History Server
 6. Logs (spark-events) and Logs (master, worker, history server)
 7. Only private or public IP's (private preferred)
-8. start / stop master , slave , history server 
+8. start / stop master , slave , history server & clear logs 
 9. argparse
 
 
