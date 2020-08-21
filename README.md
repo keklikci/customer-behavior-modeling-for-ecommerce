@@ -95,23 +95,35 @@ PYSPARK_PYTHON=python3
 SPARK_WORKER_CORES=3
 ```
 ---
-### Start master and slave 
+### Start master, slave, history server
 1. Start your master by running the following commands.
 ```bash
 cd $SPARK_HOME
 sbin/start-master.sh
 ```
 2. In your $SPARK_HOME, ```logs``` directory is created with the master's log. Examine that log. If everything is fine, then it should say "ALIVE" for the master. If not, please go over the previous steps one by one. You can now navigate to the master web UI on (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8080) ```ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com``` is the public DNS of the master.
-3. In your $SPARK_HOME, start your slave by running the following command. The master-url is spark://master:7077 and is displayed on the master web UI.
+3. In your $SPARK_HOME, start your slave by running the following command. The master-url is spark://master:7077 and is displayed on the master web UI, **master** is the hosname defined in ```/etc/hosts```.
 ```bash
 sbin/start-slave.sh spark://master:7077
 ```
 4. If successfully started, you can access the worker web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8081).If not, please refer to **step 2**.
 ---
 ### Submitting Jobs to Cluster 
+1. Before submitting your application, start a history-server(Why? Please refer to **step 3**). Run the following commands from your $SPARK_HOME. It is essential to run the command mkdir ```bash mkdir /tmp/spark-events``` before this step. Spark logs are automatically saved in this directory. If this directory is not created, spark will throw an error when you start the history server.
+```bash
+mkdir /tmp/spark-events
+sbin/start-history-server.sh
+```
+2. In your $SPARK_HOME, run the following command to lauch your application to cluster. Here, **node-count** is # of slaves + 1 master node. 
+```bash
+bin/spark-submit --master spark://master:7077 /path/to/your/script node-count /path/to/inputfile
+```
+3. If successfully launched, go to the jobs web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040). This web UI is accessible until the termination of your code, i.e sc.stop() is invoked. However, after termination you could view info related to executors, storage, environment, etc at your history-server url (explained in the following section)
+---
+### Monitoring Cluster
+1. After the termination of spark context, (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040) is no longer accessible. However, you can access all spark job logs at (http://ec2-18-191-223-14.us-east-2.compute.amazonaws.com:18080). This is how you will be monitoring your application even after the termination of your code.
 
 ---
-
 ### TODO
 3. Monitoring Cluster
 4. URLS (http://ec2-18-191-223-14.us-east-2.compute.amazonaws.com:4040/)
@@ -119,5 +131,6 @@ sbin/start-slave.sh spark://master:7077
 6. Logs (spark-events) and Logs (master, worker, history server)
 7. Only private or public IP's (private preferred)
 8. start / stop master , slave , history server 
+9. argparse
 
 
