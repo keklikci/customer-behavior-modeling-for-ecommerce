@@ -9,13 +9,15 @@ Spark Standalone Cluster ec-2
 
 ### Keyless SSH Set-Up
 
-1. Go to ssh directory.
+1. Go to ssh directory and run the followin command to create RSA key-pair.
 ```bash
 cd ~/.ssh
+ssh-keygen -t rsa -P ""
 ```
-2.
-
-
+2. Logged in as the root user (ubuntu), distribute your public key to each slave node.
+```bash
+ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+```
 ---
 
 > ```Cluster Set-Up```
