@@ -106,7 +106,7 @@ sbin/start-master.sh
 ```bash
 sbin/start-slave.sh spark://master:7077
 ```
-4. If successfully started, you can access the worker web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8081).If not, please refer to **step 2**.
+4. If successfully started, you can access the worker web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8081), else please refer to **step 2**.
 ---
 ### Submitting Jobs to Cluster 
 1. Before submitting your application, start a history-server(Why? Please refer to **step 3**). Run the following commands from your $SPARK_HOME. It is essential to run the command ```mkdir /tmp/spark-events``` before this step. Spark logs are automatically saved in this directory. If this directory is not created, spark will throw an error when you start the history server.
