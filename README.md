@@ -10,7 +10,7 @@ Spark Standalone Cluster ec-2
 ---
 ### ec-2 Ports 
 
-1. From EC2 Management Console, go to Security Groups > Edit Inbound Rules > Add rule to enable the following ports. If you have more than one slave, port 8081 will be occupied by the first worker. If you have binding problems for rest of the slaves, you may also need to enable some other ports.
+From EC2 Management Console, go to Security Groups > Edit Inbound Rules > Add rule to enable the following ports. If you have more than one slave, port 8081 will be occupied by the first worker. If you have binding problems for rest of the slaves, you may also need to enable some other ports.
 
 *spark-shell-jobs*
 ```bash
