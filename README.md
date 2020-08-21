@@ -1,11 +1,10 @@
 Spark Standalone Cluster ec-2 
 ==================================
-## Edit a file
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+Prerequisites
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
+1. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88).
+2. Pyspark (3.0.0) is installed. 
 3. Click the **Edit** button.
 4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
 5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
