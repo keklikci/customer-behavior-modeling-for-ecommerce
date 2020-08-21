@@ -3,11 +3,12 @@ Spark Standalone Cluster ec-2
 
 ### Prerequisites
 
-1. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88).
-2. Pyspark (3.0.0) is installed. If not, follow the same link.
-3. Scala is installed. If not, follow the same link.
-4. Java is installed. If not, follow the same link. The link installs openjdk-8 but this project uses openjdk 11.0.8. If you choose to install another version, make sure to set your $JAVA_HOME correctly.
-5. **While configuring cluster, please either use only private (preferable) or public IP's. The project only uses private IP's.**
+1. Python 3.6.9 is installed on all your nodes.
+2. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88).
+3. Pyspark (3.0.0) is installed. If not, follow the same link.
+4. Scala is installed. If not, follow the same link.
+5. Java is installed. If not, follow the same link. The link installs openjdk-8 but this project uses openjdk 11.0.8. If you choose to install another version, make sure to set your $JAVA_HOME correctly.
+6. **While configuring cluster, please either use only private (preferable) or public IP's. The project only uses private IP's.**
 ---
 
 ### ec-2 Ports 
