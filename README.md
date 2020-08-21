@@ -3,10 +3,14 @@ Spark Standalone Cluster ec-2
 
 ### Prerequisites
 
-1. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88).
+1. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88) 
 2. Pyspark (3.0.0) is installed. If not, follow the same link.
 ---
-This README.md is for running ```feature_extraction_spark_pipeline.py``` on AWS ec-2 instances. Sections include;
+
+### Keyless SSH Set-Up
+
+```cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys```
+---
 
 > ```Cluster Set-Up```
 
