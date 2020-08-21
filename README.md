@@ -1,7 +1,7 @@
 Spark Standalone Cluster ec-2 
 ==================================
 
-Prerequisites
+### Prerequisites
 
 1. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88).
 2. Pyspark (3.0.0) is installed. If not, follow the same link.
