@@ -6,7 +6,6 @@ Spark Standalone Cluster ec-2
 1. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88) 
 2. Pyspark (3.0.0) is installed. If not, follow the same link.
 ---
-
 ### Keyless SSH Set-Up
 
 1. Go to ssh directory and run the followin command to create RSA key-pair.
@@ -16,14 +15,38 @@ ssh-keygen -t rsa -P ""
 ```
 2. Logged in as the root user (ubuntu), distribute your public key to each slave node.
 ```bash
- cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+```
+---
+### Keyless SSH Set-Up
+
+1. Go to ssh directory and run the followin command to create RSA key-pair.
+```bash
+cd ~/.ssh
+ssh-keygen -t rsa -P ""
+```
+2. Logged in as the root user (ubuntu), distribute your public key to each slave node.
+```bash
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+```
+---
+### Keyless SSH Set-Up
+
+1. Go to ssh directory and run the followin command to create RSA key-pair.
+```bash
+cd ~/.ssh
+ssh-keygen -t rsa -P ""
+```
+2. Logged in as the root user (ubuntu), distribute your public key to each slave node.
+```bash
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
 ---
 
+
+
+
 > ```Cluster Set-Up```
-
-> ```Keyless SSH Set-Up```
-
 > ```Environment Variables```
 > ```Configuring Cluster```
 > ```Monitoring Cluster```
