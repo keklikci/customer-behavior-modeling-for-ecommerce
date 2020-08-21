@@ -12,21 +12,11 @@ Spark Standalone Cluster ec-2
 
 From EC2 Management Console, go to ```Security Groups > Edit Inbound Rules > Add rule``` to enable the following ports. If you have more than one slave, port 8081 will be occupied by the first worker. If you have binding problems for rest of your slaves, you may also need to enable some other ports.
 
-*spark-shell-jobs*
-<br```Custom TCP - TCP - 4040 - Custom - 0.0.0.0/0 ```</br>
-
-*spark-master-ui-port*
-```Custom TCP - TCP - 8080 - Custom - 0.0.0.0/0 ```
-
-*spark-history-server*
-```Custom TCP - TCP - 18080 - Custom - 0.0.0.0/0 ```
-
-*spark-master-port*
-```Custom TCP - TCP - 7077 - Custom - 0.0.0.0/0 ```
-
-*spark-worker-ui-port*
-```Custom TCP - TCP - 8081 - Custom - 0.0.0.0/0 ```
-
+1. To start a spark master, ```Custom TCP - TCP - 7077 - Custom - 0.0.0.0/0 ```.
+2. To start a spark worker, ```Custom TCP - TCP - 8081 - Custom - 0.0.0.0/0 ```.
+3. To access spark jobs UI, ```Custom TCP - TCP - 4040 - Custom - 0.0.0.0/0 ```.
+4. To access spark master UI, ```Custom TCP - TCP - 8080 - Custom - 0.0.0.0/0 ```.
+5. To access spark history history server UI, ```Custom TCP - TCP - 18080 - Custom - 0.0.0.0/0```.
 ---
 ### Keyless SSH Set-Up
 
@@ -68,7 +58,7 @@ XXX.XX.X.XX master
 ```
 ---
 
-# TODO
+### TODO
 1. Cluster Set-Up
 2. Configuring Cluster
 3. Monitoring Cluster
