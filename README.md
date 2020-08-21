@@ -27,7 +27,8 @@ From EC2 Management Console, go to ```Security Groups > Edit Inbound Rules > Add
 cd ~/.ssh
 ssh-keygen -t rsa -P ""
 ```
-2. Logged in as the root user (ubuntu), distribute your public key to each slave node.
+2. Name your private key ```id_rsa``` and public key ```id_rsa.pub```.
+3. Logged in as the root user (ubuntu), distribute your public key to each slave node.
 ```bash
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
