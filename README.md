@@ -137,13 +137,3 @@ sbin/stop-history-server.sh
 ```
 4. After stopping all instances, it's convenient to delete the ```$SPARK_HOME/logs```directory. When you re-launch an application, it will automatically be re-generated.
 ---
-### TODO
-3. Monitoring Cluster
-4. URLS
-5. History Server
-6. Logs (spark-events) and Logs (master, worker, history server)
-7. Only private or public IP's (private preferred)
-8. start / stop master , slave , history server & clear logs 
-9. argparse
-
-
