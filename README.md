@@ -121,7 +121,7 @@ bin/spark-submit --master spark://master:7077 /path/to/your/script node-count /p
 3. If successfully launched, go to the jobs web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040). This web UI is accessible until the termination of your code, i.e sc.stop() is invoked. However, after termination you could view info related to executors, storage, environment, etc at your history-server url (explained in the following section)
 ---
 ### Monitoring Cluster
-1. After the termination of spark context, (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040) is no longer accessible. However, you can access all spark job logs at (http://ec2-18-191-223-14.us-east-2.compute.amazonaws.com:18080). This is how you will be monitoring your application even after the termination of your code.
+1. After the termination of spark context, (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040) is no longer accessible. However, you can access all spark job logs at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:18080). This is how you will be monitoring your application even after the termination of your code.
 
 ---
 ### TODO
