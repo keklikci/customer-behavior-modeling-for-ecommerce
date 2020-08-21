@@ -3,7 +3,7 @@ Spark Standalone Cluster ec-2
 
 ### Prerequisites
 
-1. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88) 
+1. SSH server is installed on the master node. If not, [follow the link](https://blog.insightdatascience.com/simply-install-spark-cluster-mode-341843a52b88).
 2. Pyspark (3.0.0) is installed. If not, follow the same link.
 3. Scala is installed. If not, follow the same link.
 4. Java is installed. If not, follow the same link. The link installs openjdk-8 but this project uses openjdk 11.0.8. If you choose to install another version, make sure to set your $JAVA_HOME correctly.
@@ -12,23 +12,23 @@ Spark Standalone Cluster ec-2
 
 1. From EC2 Management Console, go to Security Groups > Edit Inbound Rules > Add rule to enable the following ports. If you have more than one slave, port 8081 will be occupied by the first worker. If you have binding problems for rest of the slaves, you may also need to enable some other ports.
 
-*for park-shell-jobs*
+*spark-shell-jobs*
 ```bash
 Custom TCP - TCP - 4040 - Custom - 0.0.0.0/0 
 ```
-*for spark-master-ui-port*
+*spark-master-ui-port*
 ```bash
 Custom TCP - TCP - 8080 - Custom - 0.0.0.0/0 
 ```
-*for spark-history-server*
+*spark-history-server*
 ```bash
 Custom TCP - TCP - 18080 - Custom - 0.0.0.0/0 
 ```
-*for spark-master-port*
+*spark-master-port*
 ```bash
 Custom TCP - TCP - 7077 - Custom - 0.0.0.0/0 
 ```
-*for spark-worker-ui-port*
+*spark-worker-ui-port*
 ```bash
 Custom TCP - TCP - 8081 - Custom - 0.0.0.0/0 
 ```
