@@ -7,7 +7,9 @@ Spark Standalone Cluster ec-2
 2. Pyspark (3.0.0) is installed. If not, follow the same link.
 3. Scala is installed. If not, follow the same link.
 4. Java is installed. If not, follow the same link. The link installs openjdk-8 but this project uses openjdk 11.0.8. If you choose to install another version, make sure to set your $JAVA_HOME correctly.
+5. **While configuring cluster, please either use only private (preferable) or public IP's. The project only uses private IP's.**
 ---
+
 ### ec-2 Ports 
 
 From EC2 Management Console, go to ```Security Groups > Edit Inbound Rules > Add rule``` to enable the following ports. If you have more than one slave, port 8081 will be occupied by the first worker. If you have binding problems for rest of your slaves, you may also need to enable some other ports.
@@ -57,13 +59,18 @@ sudo nano -w /etc/hosts
 XXX.XX.X.XX master
 ```
 ---
+### Configuring Cluster
+
+1. 
 
 ### TODO
 1. Cluster Set-Up
 2. Configuring Cluster
 3. Monitoring Cluster
-4. URLS
+4. URLS (http://ec2-18-191-223-14.us-east-2.compute.amazonaws.com:4040/)
 5. History Server
 6. Logs (spark-events) and Logs (master, worker, history server)
+7. Only private or public IP's (private preferred)
+8. start / stop master , slave , hsitroy server 
 
 
