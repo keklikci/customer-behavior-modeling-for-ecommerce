@@ -30,27 +30,26 @@ ssh-keygen -t rsa -P ""
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
 ---
-### Keyless SSH Set-Up
+### Environment Variables (run the commands in order)
 
-1. Go to ssh directory and run the followin command to create RSA key-pair.
+1. Run the following command to define $SPARK_HOME, the directory you are going to start your master and slaves and execute several other spark commands.
 ```bash
-cd ~/.ssh
-ssh-keygen -t rsa -P ""
+export SPARK_HOME=/home/ubuntu/spark-3.0.0-bin-hadoop2.7
 ```
-2. Logged in as the root user (ubuntu), distribute your public key to each slave node.
+2. Run the following command for python path.
 ```bash
-cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+export PYTHONPATH=$SPARK_HOME/python:
+```
+3. Run the following command to enable network access to JVM. 
+```bash
+export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.10.9-src.zip:$PYTHONPATH
 ```
 ---
 
-
-
-
 > ```Cluster Set-Up```
-> ```Environment Variables```
 > ```Configuring Cluster```
 > ```Monitoring Cluster```
-
+> hosts file 
 
 
 ## For Windows OS 
