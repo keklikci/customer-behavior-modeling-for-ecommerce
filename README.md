@@ -23,7 +23,7 @@ From EC2 Management Console, go to ```Security Groups > Edit Inbound Rules > Add
 ---
 ### Keyless SSH Set-Up
 
-1. Go to ssh directory and run the followin command to create RSA key-pair.
+1. Go to ssh directory and run the following command to create RSA key-pair.
 ```bash
 cd ~/.ssh
 ssh-keygen -t rsa -P ""
@@ -119,6 +119,10 @@ sbin/start-history-server.sh
 2. In your $SPARK_HOME, run the following command to lauch your application to cluster. Here, **node-count** is # of slaves + 1 master node. 
 ```bash
 bin/spark-submit --master spark://master:7077 /path/to/your/script node-count /path/to/inputfile
+```
+**Example** 
+```bash
+bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/feature_extraction_spark_pipeline.py 2 /data/insider/data.snappy.parquet
 ```
 3. If successfully launched, go to the jobs web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040). This web UI is accessible until the termination of your code, i.e sc.stop() is invoked. However, after termination you could view info related to executors, storage, environment, etc at your history-server url (explained in the following section).
 ---
