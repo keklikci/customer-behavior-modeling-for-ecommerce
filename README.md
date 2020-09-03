@@ -15,6 +15,8 @@ Spark Standalone Cluster ec-2
 
 From EC2 Management Console, go to ```Security Groups > Edit Inbound Rules > Add rule``` to enable the following ports. If you have more than one slave, port 8081 will be occupied by the first worker. If you have binding problems for rest of your slaves, you may also need to enable some other ports.
 
+*Note that it is possible to have more than 1 worker instance on a slave node. If that is the case, then you do not need to enable other successive ports because in a sense you now have two separate workers considering you allocated your resources correctly!*
+
 1. To start a spark master, ```Custom TCP - TCP - 7077 - Custom - 0.0.0.0/0 ```
 2. To start a spark worker, ```Custom TCP - TCP - 8081 - Custom - 0.0.0.0/0 ```
 3. To access spark jobs UI, ```Custom TCP - TCP - 4040 - Custom - 0.0.0.0/0 ```
@@ -83,18 +85,22 @@ XXX.XX.XX.46
 5. Go to your ```spark-defaults.conf``` file and set the following:
 ```bash
 spark.eventLog.enabled          true
-spark.driver.memory             12g
+spark.driver.memory             1g
 spark.serializer                org.apache.spark.serializer.KryoSerializer
 spark.master                    spark://master:7077
 spark.eventLog.dir              file:///tmp/spark-events
 spark.history.fs.logDirectory   file:///tmp/spark-events
+spark.executor.cores            5
+spark.executor.instances        5
+spark.executor.memory           10g
 ```
 6. Go to your ```spark-env.sh``` file and set the following:
 ```bash
 SPARK_MASTER_HOST=XXX.XX.XX.61
 JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
 PYSPARK_PYTHON=python3
-SPARK_WORKER_CORES=3
+SPARK_WORKER_CORES=16
+SPARK_WORKER_INSTANCES=2
 ```
 ---
 ### Start master, slave, history server
@@ -122,7 +128,7 @@ bin/spark-submit --master spark://master:7077 /path/to/your/script node-count /p
 ```
 **Example** 
 ```bash
-bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/feature_extraction_spark_pipeline.py 2 /data/insider/data.snappy.parquet
+bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/feature_extraction_spark_pipeline.py 2 /data/insider/largedata.parquet
 ```
 3. If successfully launched, go to the jobs web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040). This web UI is accessible until the termination of your code, i.e sc.stop() is invoked. However, after termination you could view info related to executors, storage, environment, etc at your history-server url (explained in the following section).
 ---
