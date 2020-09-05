@@ -144,8 +144,8 @@ def viewed_item_features(sessions):
         price_old_item = []
         for row in session:
             if row[PAGE_TYPE] == "productDetail":
-                price_viewed_item.append(row[PRODUCT_PRICE])
-                price_old_item.append(row[OLD_PRODUCT_PRICE])
+                price_viewed_item.append(row[PRODUCT_PRICE]) if row[PRODUCT_PRICE] else price_viewed_item.append(0)
+                price_old_item.append(row[OLD_PRODUCT_PRICE]) if row[OLD_PRODUCT_PRICE] else price_old_item.append(0)
                 viewed_results.append(
                     {
                         "current_price_viewed_item": price_viewed_item[-1],
@@ -213,7 +213,7 @@ def cart_item_features(sessions):
         for row in session:
             pids = row[PRODUCT_ID] if row[PRODUCT_ID] else []
             if row[PAGE_TYPE] == "productDetail":
-                price = row[PRODUCT_PRICE]
+                price = row[PRODUCT_PRICE] if row[PRODUCT_PRICE] else 0
                 old_price = (
                     row[OLD_PRODUCT_PRICE] if row[OLD_PRODUCT_PRICE] else price
                 )
@@ -279,7 +279,7 @@ def _get_last_viewed_items(session):
     price_old_item = []
     for row in session:
         if row[PAGE_TYPE] == "productDetail":
-            price_viewed_item.append(row[PRODUCT_PRICE])
+            price_viewed_item.append(row[PRODUCT_PRICE]) if row[PRODUCT_PRICE] else price_viewed_item.append(0)
             price_old_item.append(
                 row[OLD_PRODUCT_PRICE]
                 if row[OLD_PRODUCT_PRICE]
@@ -326,7 +326,7 @@ def _get_last_cart_item_features(session):
     for row in session:
         pids = row[PRODUCT_ID] if row[PRODUCT_ID] else []
         if row[PAGE_TYPE] == "productDetail":
-            price = row[PRODUCT_PRICE]
+            price = row[PRODUCT_PRICE] if row[PRODUCT_PRICE] else 0
             old_price = (
                 row[OLD_PRODUCT_PRICE] if row[OLD_PRODUCT_PRICE] else price
             )
