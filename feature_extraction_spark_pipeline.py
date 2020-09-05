@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # coding: utf-8
 
@@ -843,7 +844,9 @@ def main():
     """ save output """
     # data.saveAsTextFile("/home/ubuntu/spark-3.0.0-bin-hadoop2.7/pusulaInsiderOutput")
     """ print sample output on terminal """
-    print(data.take(100))
+    sample_output = data.take(100)
+    for i,sess in enumerate(sample_output):
+        print(f"SampleOut:{i}\t{sess}")
     
     """ destroy spark session & context
      uncomment the following lines if still desire to display SPARK_UI after execution """
