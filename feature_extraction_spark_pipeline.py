@@ -846,7 +846,7 @@ def main():
     """ print sample output on terminal """
     sample_output = data.take(100)
     for i,sess in enumerate(sample_output):
-        print(f"SampleOut:{i}\t{sess}")
+        print(f"SampleOut:{i}\t{sess}\n")
     
     """ destroy spark session & context
      uncomment the following lines if still desire to display SPARK_UI after execution """
