@@ -92,7 +92,7 @@ spark.eventLog.dir              file:///tmp/spark-events
 spark.history.fs.logDirectory   file:///tmp/spark-events
 spark.executor.cores            5
 spark.executor.instances        5
-spark.executor.memory           10g
+spark.executor.memory           20g
 ```
 6. Go to your ```spark-env.sh``` file and set the following:
 ```bash
