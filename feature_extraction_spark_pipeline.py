@@ -841,8 +841,10 @@ def main():
     print("Execution time: {0:.2f} sec".format(end_time - start_time))
 
     """ save output """
-    data.saveAsTextFile("/home/ubuntu/spark-3.0.0-bin-hadoop2.7/pusulaInsiderOutput")
-
+    # data.saveAsTextFile("/home/ubuntu/spark-3.0.0-bin-hadoop2.7/pusulaInsiderOutput")
+    """ print sample output on terminal """
+    print(data.take(100))
+    
     """ destroy spark session & context
      uncomment the following lines if still desire to display SPARK_UI after execution """
     spark.stop()
