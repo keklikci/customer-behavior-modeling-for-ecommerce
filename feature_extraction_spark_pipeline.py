@@ -15,8 +15,13 @@ import math
 from datetime import datetime
 from json import dumps 
 import statistics
+
 # for machine count
 import argparse
+
+# output file
+import csv 
+from collections import ChainMap
 
 """
 *** << header indexes >> 
@@ -796,6 +801,15 @@ def user_sessions(sessions):
                                     groupby(sorted(rows,key=itemgetter(7)), itemgetter(7))])
     return sessions
 
+""" generates csv output from rdd
+writes feature-dict  values to csv row 
+"""
+def genOutput(feature):
+    with open("output.csv", "a") as f:
+        w = csv.writer(f)
+        w.writerow(feature.values())
+    f.close()
+
 
 """
 *** << MAIN CHECKPOINT >> 
@@ -841,13 +855,17 @@ def main():
     end_time = time.time()
     print("Execution time: {0:.2f} sec".format(end_time - start_time))
 
-    """ save output """
-    # data.saveAsTextFile("/home/ubuntu/spark-3.0.0-bin-hadoop2.7/pusulaInsiderOutput")
     """ print sample output on terminal """
+    """
     sample_output = data.take(100)
     for i,sess in enumerate(sample_output):
         print(f"SampleOut:{i}\t{sess}\n")
-    
+    """
+
+    """ save output """
+    data = data.map(lambda features: dict(ChainMap(*features)))
+    data.foreach(lambda feature: genOutput(feature))  
+
     """ destroy spark session & context
      uncomment the following lines if still desire to display SPARK_UI after execution """
     spark.stop()
