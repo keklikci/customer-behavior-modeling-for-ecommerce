@@ -88,8 +88,8 @@ spark.eventLog.enabled          true
 spark.driver.memory             1g
 spark.serializer                org.apache.spark.serializer.KryoSerializer
 spark.master                    spark://master:7077
-spark.eventLog.dir              file:///tmp/spark-events
-spark.history.fs.logDirectory   file:///tmp/spark-events
+spark.eventLog.dir              file:///home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events
+spark.history.fs.logDirectory   file:///home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events
 spark.executor.cores            5
 spark.executor.instances        5
 spark.executor.memory           20g
