@@ -1,4 +1,4 @@
-Spark Standalone Cluster ec-2 
+EC2 Spark Standalone Cluster
 ==================================
 
 ### Prerequisites
@@ -9,6 +9,20 @@ Spark Standalone Cluster ec-2
 4. Scala is installed. If not, follow the same link.
 5. Java is installed. If not, follow the same link. The link installs openjdk-8 but this project uses openjdk 11.0.8. If you choose to install another version, make sure to set your $JAVA_HOME correctly.
 6. **While configuring cluster, please either use only private (preferable) or public IP's. The project only uses private IP's.**
+---
+
+### Partition Large Data 
+
+1. Split the large data file ```largedata.parquet``` to 13 separate partitions (each approx. 1 GB)
+2. Run the following command to generate inputFiles directory. Execution time is about 4 minutes. 
+```bash
+bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/split_parquet.py 3 /data/insider/largedata.parquet
+```
+3. Verify inputFiles.
+```bash
+cd /data/insider/partitioned 
+ls 
+```
 ---
 
 ### ec-2 Ports 
@@ -177,4 +191,11 @@ sbin/stop-slave.sh
 sbin/stop-history-server.sh
 ```
 4. After stopping all instances, it's convenient to delete the ```$SPARK_HOME/logs```directory. When you re-launch an application, it will automatically be re-generated.
+---
+
+### Check Output (OPTIONAL)
+1. Run the following script for the outputFile you want to check.
+```bash
+bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/check_csv.py 3 /data/insider/partitionedOutput/one_of_output_partition_files
+```
 ---
