@@ -11,20 +11,6 @@ EC2 Spark Standalone Cluster
 6. **While configuring cluster, please either use only private (preferable) or public IP's. The project only uses private IP's.**
 ---
 
-### Partition Large Data 
-
-1. Split the large data file ```largedata.parquet``` to 13 separate partitions (each approx. 1 GB)
-2. Run the following command to generate inputFiles directory. Execution time is about 4 minutes. 
-```bash
-bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/split_parquet.py 3 /data/insider/largedata.parquet
-```
-3. Verify inputFiles.
-```bash
-cd /data/insider/partitioned 
-ls 
-```
----
-
 ### ec-2 Ports 
 
 From EC2 Management Console, go to ```Security Groups > Edit Inbound Rules > Add rule``` to enable the following ports. If you have more than one slave, port 8081 will be occupied by the first worker. If you have binding problems for rest of your slaves, you may also need to enable some other ports.
@@ -153,7 +139,7 @@ sbin/start-slave.sh spark://master:7077
 mkdir /home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events
 sbin/start-history-server.sh
 ```
-2. In your $SPARK_HOME, run the following command to lauch your application to cluster. Here, **node-count** is # of slaves + 1 master node. 
+2. In your $SPARK_HOME, run the following command to lauch your application to cluster. Here, **node-count** is # of slaves + 1 master node. However before running the following command on ```spark_features.py```, it's essential to run ```bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/split_parquet.py 3 /data/insider/largedata.parquet``` to split the large data file ```largedata.parquet``` to 13 separate partitions (each approx. 1 GB). Execution time will be about 4 minutes.
 ```bash
 bin/spark-submit --master spark://master:7077 /path/to/your/script node-count /path/to/inputfile
 ```
