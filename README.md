@@ -22,6 +22,7 @@ From EC2 Management Console, go to ```Security Groups > Edit Inbound Rules > Add
 3. To access spark jobs UI, ```Custom TCP - TCP - 4040 - Custom - 0.0.0.0/0 ```
 4. To access spark master UI, ```Custom TCP - TCP - 8080 - Custom - 0.0.0.0/0 ```
 5. To access spark history history server UI, ```Custom TCP - TCP - 18080 - Custom - 0.0.0.0/0```
+6. To access spark driver port, ```Custom TCP - TCP - 33139 - Custom - 0.0.0.0/0```
 ---
 ### Keyless SSH Set-Up
 
@@ -81,6 +82,8 @@ cp log4j.properties.template log4j.properties
 ```bash
 # A Spark Worker will be started on each of the machines listed below.
 XXX.XX.XX.46
+XXX.XX.X.61
+XXX.XX.XX.6
 ```
 5. Go to your ```spark-defaults.conf``` file and set the following:
 ```bash
@@ -90,20 +93,34 @@ spark.serializer                org.apache.spark.serializer.KryoSerializer
 spark.master                    spark://master:7077
 spark.eventLog.dir              file:///home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events
 spark.history.fs.logDirectory   file:///home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events
-spark.executor.cores            5
-spark.executor.instances        5
-spark.executor.memory           20g
+spark.executor.cores            4
+spark.executor.memory           13g
+spark.executor.heartbeatInterval 10000000
+spark.network.timeout 10000000
+spark.storage.blockManagerSlaveTimeoutMs 10000000
+spark.driver.port 33139
+spark.driver.bindAddress XXX.XX.X.61
+spark.master.host XXX.XX.X.61
+spark.driver.host XXX.XX.X.61
 ```
 6. Go to your ```spark-env.sh``` file and set the following:
 ```bash
 SPARK_MASTER_HOST=XXX.XX.XX.61
 JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
 PYSPARK_PYTHON=python3
-SPARK_WORKER_CORES=16
-SPARK_WORKER_INSTANCES=2
+SPARK_LOCAL_DIRS=/data/insider
 ```
 ---
-### Start master, slave, history server
+### Start master, slave, history server (FOR 1 MASTER, MULTIPLE WORKER CONFIGURATION)
+1. Start your master and slaves by running the following command.
+```bash
+cd $SPARK_HOME
+sbin/start-all.sh
+```
+2. In your $SPARK_HOME, ```logs``` directory is created with the master and worker logs. Examine the logs. If everything is fine, then it should say "ALIVE" for the master. If not, please go back to the previous step. You can now navigate to the master web UI on (http://_master_public_DNS:8080) ```ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com``` is the public DNS of the master.
+3. If successfully started, you can access the worker web UI's at (http://_worker_public_DNS:8081), else please refer to **step 2**.
+---
+### Start master, slave, history server (FOR 1 MASTER, 1 WORKER CONFIGURATION)
 1. Start your master by running the following commands.
 ```bash
 cd $SPARK_HOME
@@ -114,12 +131,12 @@ sbin/start-master.sh
 ```bash
 sbin/start-slave.sh spark://master:7077
 ```
-4. If successfully started, you can access the worker web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8081), else please refer to **step 2**.
+4. If successfully started, you can access the worker web UI at (http://_worker_public_DNS:8081), else please refer to **step 2**.
 ---
 ### Submitting Jobs to Cluster 
-1. Before submitting your application, start a history-server(Why? Please refer to **step 3**). Run the following commands from your $SPARK_HOME. It is essential to run the command ```mkdir /tmp/spark-events``` before this step. Spark logs are automatically saved in this directory. If this directory is not created, spark will throw an error when you start the history server.
+1. Before submitting your application, start a history-server(Why? Please refer to **step 3**). Run the following commands from your $SPARK_HOME. It is essential to run the command ```mkdir /home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events``` before this step. Spark logs are automatically saved in this directory. If this directory is not created, spark will throw an error when you start the history server.
 ```bash
-mkdir /tmp/spark-events
+mkdir /home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events
 sbin/start-history-server.sh
 ```
 2. In your $SPARK_HOME, run the following command to lauch your application to cluster. Here, **node-count** is # of slaves + 1 master node. 
@@ -128,15 +145,27 @@ bin/spark-submit --master spark://master:7077 /path/to/your/script node-count /p
 ```
 **Example** 
 ```bash
-bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/feature_extraction_spark_pipeline.py 2 /data/insider/largedata.parquet
+bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/spark_features.py 3 /data/insider/partitioned/one_of_partitioned_files
 ```
 3. If successfully launched, go to the jobs web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040). This web UI is accessible until the termination of your code, i.e sc.stop() is invoked. However, after termination you could view info related to executors, storage, environment, etc at your history-server url (explained in the following section).
 ---
 ### Monitoring Cluster
 1. After the termination of spark context, (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040) is no longer accessible. However, you can access all spark job logs at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:18080). This is how you will be monitoring your application after the termination of your code.
-2. History server fetches spark logs from ```/tmp/spark-events``` directory. You could clear the history server web UI if you submit too many applications by clearing those logs with ```rm -r /tmp/spark-events```.
+2. History server fetches spark logs from ```/home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events``` directory. You could clear the history server web UI if you submit too many applications by clearing those logs with ```rm -r /home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events```.
 ---
-### Stop master, slave, history server
+### Start master, slave, history server (FOR 1 MASTER, MULTIPLE WORKER CONFIGURATION)
+1. Run the following commands to stop the master and slaves.
+```bash
+sbin/stop-all.sh
+```
+2. After running each command, remember that you will lose access to the web UI of the instance you stop.
+3. If you no longer desire to look at the history-server, stop the history server by running the following command.
+```bash
+sbin/stop-history-server.sh
+```
+4. After stopping all instances, it's convenient to delete the ```$SPARK_HOME/logs```directory. When you re-launch an application, it will automatically be re-generated.
+---
+### Stop master, slave, history server (FOR 1 MASTER, 1 WORKER CONFIGURATION)
 1. Run the following commands to stop the master and slave.
 ```bash
 sbin/stop-master.sh
