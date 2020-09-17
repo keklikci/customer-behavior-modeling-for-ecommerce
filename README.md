@@ -153,7 +153,7 @@ bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/spark_feat
 1. After the termination of spark context, (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040) is no longer accessible. However, you can access all spark job logs at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:18080). This is how you will be monitoring your application after the termination of your code.
 2. History server fetches spark logs from ```/home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events``` directory. You could clear the history server web UI if you submit too many applications by clearing those logs with ```rm -r /home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events```.
 ---
-### Start master, slave, history server (FOR 1 MASTER, MULTIPLE WORKER CONFIGURATION)
+### Stop master, slave, history server (FOR 1 MASTER, MULTIPLE WORKER CONFIGURATION)
 1. Run the following commands to stop the master and slaves.
 ```bash
 sbin/stop-all.sh
