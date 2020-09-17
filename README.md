@@ -61,7 +61,7 @@ sudo nano -w /etc/hosts
 2. Add the private IP address of the spark master to the file.
 ```bash
 127.0.0.1 localhost
-XXX.XX.X.XX master
+XXX.XX.X.61 master
 ```
 ---
 ### Configuring Cluster
@@ -117,8 +117,8 @@ SPARK_LOCAL_DIRS=/data/insider
 cd $SPARK_HOME
 sbin/start-all.sh
 ```
-2. In your $SPARK_HOME, ```logs``` directory is created with the master and worker logs. Examine the logs. If everything is fine, then it should say "ALIVE" for the master. If not, please go back to the previous step. You can now navigate to the master web UI on (http://_master_public_DNS:8080) ```ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com``` is the public DNS of the master.
-3. If successfully started, you can access the worker web UI's at (http://_worker_public_DNS:8081), else please refer to **step 2**.
+2. In your $SPARK_HOME, ```logs``` directory is created with the master and worker logs. Examine the logs. If everything is fine, then it should say "ALIVE" for the master. If not, please go back to the previous step. You can now navigate to the master web UI on (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8080) ```ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com``` is the public DNS of the master.
+3. If successfully started, you can access the worker web UI's at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8081), else please refer to **step 2**.
 ---
 ### Start master, slave, history server (FOR 1 MASTER, 1 WORKER CONFIGURATION)
 1. Start your master by running the following commands.
@@ -131,7 +131,7 @@ sbin/start-master.sh
 ```bash
 sbin/start-slave.sh spark://master:7077
 ```
-4. If successfully started, you can access the worker web UI at (http://_worker_public_DNS:8081), else please refer to **step 2**.
+4. If successfully started, you can access the worker web UI at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8081), else please refer to **step 2**.
 ---
 ### Submitting Jobs to Cluster 
 1. Before submitting your application, start a history-server(Why? Please refer to **step 3**). Run the following commands from your $SPARK_HOME. It is essential to run the command ```mkdir /home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events``` before this step. Spark logs are automatically saved in this directory. If this directory is not created, spark will throw an error when you start the history server.
