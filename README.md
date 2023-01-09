@@ -111,7 +111,7 @@ PYSPARK_PYTHON=python3
 SPARK_LOCAL_DIRS=/data/insider
 ```
 ---
-### Start master, slave, history server (FOR 1 MASTER, MULTIPLE WORKER CONFIGURATION)
+### Start master, slave, history server (1 master, multiple worker configuration)
 1. Start your master and slaves by running the following command.
 ```bash
 cd $SPARK_HOME
@@ -120,7 +120,7 @@ sbin/start-all.sh
 2. In your $SPARK_HOME, ```logs``` directory is created with the master and worker logs. Examine the logs. If everything is fine, then it should say "ALIVE" for the master. If not, please go back to the previous step. You can now navigate to the master web UI on (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8080) ```ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com``` is the public DNS of the master.
 3. If successfully started, you can access the worker web UI's at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:8081), else please refer to **step 2**.
 ---
-### Start master, slave, history server (FOR 1 MASTER, 1 WORKER CONFIGURATION)
+### Start master, slave, history server (1 master, 1 worker configuration)
 1. Start your master by running the following commands.
 ```bash
 cd $SPARK_HOME
@@ -154,7 +154,7 @@ bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/spark_feat
 1. After the termination of spark context, (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:4040) is no longer accessible. However, you can access all spark job logs at (http://ec2-XX-XXX-XXX-14.us-east-2.compute.amazonaws.com:18080). This is how you will be monitoring your application after the termination of your code.
 2. History server fetches spark logs from ```/home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events``` directory. You could clear the history server web UI if you submit too many applications by clearing those logs with ```rm -r /home/ubuntu/spark-3.0.0-bin-hadoop2.7/spark-events```.
 ---
-### Stop master, slave, history server (FOR 1 MASTER, MULTIPLE WORKER CONFIGURATION)
+### Stop master, slave, history server (1 master, multiple worker configuration)
 1. Run the following commands to stop the master and slaves.
 ```bash
 sbin/stop-all.sh
@@ -166,7 +166,7 @@ sbin/stop-history-server.sh
 ```
 4. After stopping all instances, it's convenient to delete the ```$SPARK_HOME/logs```directory. When you re-launch an application, it will automatically be re-generated.
 ---
-### Stop master, slave, history server (FOR 1 MASTER, 1 WORKER CONFIGURATION)
+### Stop master, slave, history server (1 master, 1 worker configuration)
 1. Run the following commands to stop the master and slave.
 ```bash
 sbin/stop-master.sh
@@ -180,7 +180,7 @@ sbin/stop-history-server.sh
 4. After stopping all instances, it's convenient to delete the ```$SPARK_HOME/logs```directory. When you re-launch an application, it will automatically be re-generated.
 ---
 
-### Check Output (OPTIONAL)
+### Check Output (optional)
 1. Run the following script for the outputFile you want to check.
 ```bash
 bin/spark-submit --master spark://master:7077 /home/matalay/Workspace/check_csv.py 3 /data/insider/partitionedOutput/one_of_output_partition_files
