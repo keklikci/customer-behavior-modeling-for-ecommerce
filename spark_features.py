@@ -15,6 +15,12 @@ from datetime import datetime
 from json import dumps 
 import statistics
 
+from feature_math import (
+    time_difference_list,
+    weighted_mean,
+    weighted_standard_deviation,
+)
+
 # for machine count
 import argparse
 
@@ -498,43 +504,13 @@ def product_id_features(sessions):
 *** func_current_impl : time_difference_features_purchases(sessions)
 """
 def _get_time_difference_list(date_list):
-    """Return time difference between consecutive elements of an ordered list and the first element
-    is taken as the start of the data """
-    if len(date_list) < 2:
-        return [0]
-    else:
-        return [
-            (t2 - t1).total_seconds()
-            for t1, t2 in zip(date_list[:-1], date_list[1:])
-        ]
+    return time_difference_list(date_list)
 
 def _get_mean_paper(elements):
-    """ Return the mean of elements of a list according to the paper in which current elements have
-    higher weight """
-    a = list(range(1, len(elements) + 1))
-    total_weight = 0
-    for i in a:
-        total_weight += i ** 2
-
-    mean = 0
-
-    for i, list_element in enumerate(elements):
-        mean += (((i + 1) ** 2) / total_weight) * list_element
-
-    return mean
+    return weighted_mean(elements)
 
 def _get_std_paper(elements, mean):
-    """ Return the standard deviation of elements of a list according to the paper in which current elements have
-    higher weight """
-    a = list(range(1, len(elements) + 1))
-    total_weight = 0
-    for i in a:
-        total_weight += i ** 2
-    variance = 0
-    for i, list_element in enumerate(elements):
-        variance += (((i + 1) ** 2) / total_weight) * (list_element - mean) ** 2
-
-    return math.sqrt(variance)
+    return weighted_standard_deviation(elements, mean)
 
 def time_difference_features_purchases(sessions):
     """ Return features related to time difference between two consecutive purchases 
@@ -940,4 +916,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

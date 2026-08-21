@@ -1,24 +1,26 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# create spark session & context
+import argparse
+
 from pyspark.sql import SparkSession
-# import dask.dataframe as dd
 
-def main():
-    
-    spark = SparkSession \
-    .builder \
-    .appName("split_Input")  \
-    .getOrCreate()
 
-    sdf = spark.read.parquet("/data/insider/largedata.parquet") 
-    sdf.coalesce(13).write.parquet("/data/insider/partitioned")
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Coalesce a Parquet dataset")
+    parser.add_argument("input_file")
+    parser.add_argument("output_directory")
+    parser.add_argument("--partitions", type=int, default=13)
+    args = parser.parse_args()
 
-    """
-    ddf = dd.read_parquet('/data/insider/largedata.parquet')
-    ddf.repartition(3).to_parquet('/data/insider/partitioned')
-    """
+    spark = SparkSession.builder.appName("split_input").getOrCreate()
+    try:
+        spark.read.parquet(args.input_file).coalesce(args.partitions).write.parquet(
+            args.output_directory
+        )
+    finally:
+        spark.stop()
+
+
 if __name__ == "__main__":
     main()
-
