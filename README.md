@@ -1,5 +1,51 @@
-EC2 Spark Standalone Cluster
-==================================
+# Customer Behavior Modeling for Ecommerce
+
+This project builds session and customer features from ecommerce event data with
+PySpark. The original deployment workflow targets an EC2 Spark standalone
+cluster, while the feature helpers and tests can run locally without a cluster.
+
+## Development setup
+
+Install [uv](https://docs.astral.sh/uv/) and sync the project environment:
+
+```bash
+uv sync
+```
+
+Run formatting, linting, and tests with:
+
+```bash
+uv run ruff format .
+uv run ruff check .
+uv run pytest
+```
+
+## Scripts
+
+The Spark scripts expect a cluster environment and Parquet data paths supplied
+by the operator. Use `spark-submit` for distributed jobs:
+
+```bash
+spark-submit spark_features.py <number-of-machines> <input-file>
+spark-submit repartition.py <number-of-machines> <input-file>
+spark-submit split_parquet.py <input-file> <output-directory>
+spark-submit check_csv.py <input-file>
+```
+
+The default input and output paths in `split_parquet.py` and `check_csv.py`
+match the historical EC2 layout. Edit those paths before using another layout.
+
+## Project layout
+
+- `spark_features.py` contains the distributed feature pipeline
+- `feature_math.py` contains dependency-light calculations with unit tests
+- `repartition.py` inspects partition balance
+- `split_parquet.py` prepares partitioned input
+- `check_csv.py` previews generated CSV output
+
+## EC2 Spark standalone cluster
+
+The following sections document the original EC2 deployment workflow.
 
 ### Prerequisites
 
